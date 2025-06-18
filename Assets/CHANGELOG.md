@@ -18,3 +18,5 @@
 ### Added CompositeTweener wrapper to allow multiple Tweeners to be played simultaneously more easily
 ## [1.3.0] 2025-06-14
 ### Added speed parameter for OnDemand Tweeners. Added Stop to CompositeTweener
+## [1.4.0] 2025-06-18
+### Added Duration property to composite tweeners

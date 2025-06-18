@@ -8,11 +8,14 @@ namespace JinToliq.SimpleTween
     private readonly IReadOnlyList<Tweener> _tweeners;
     private readonly Tweener _longest;
 
+    public bool IsEmpty => _tweeners is null || _tweeners.Count == 0;
+    public float Duration => IsEmpty ? 0 : _longest.Duration;
+
     public CompositeTweener(IReadOnlyList<Tweener> tweeners)
     {
       _tweeners = tweeners;
       _longest = null;
-      if (_tweeners.Count == 0)
+      if (IsEmpty)
         return;
 
       _longest = tweeners[0];
@@ -24,12 +27,12 @@ namespace JinToliq.SimpleTween
       }
     }
 
-    public void Play(Action onComplete, float speed = 1f)
+    public float Play(Action onComplete, float speed = 1f)
     {
-      if (_tweeners.Count == 0)
+      if (IsEmpty)
       {
         onComplete?.Invoke();
-        return;
+        return 0;
       }
 
       foreach (var item in _tweeners)
@@ -39,14 +42,16 @@ namespace JinToliq.SimpleTween
         else
           item.Play(speed);
       }
+
+      return _longest.Duration;
     }
 
-    public void PlayReverse(Action onComplete, float speed = 1f)
+    public float PlayReverse(Action onComplete, float speed = 1f)
     {
-      if (_tweeners.Count == 0)
+      if (IsEmpty)
       {
         onComplete?.Invoke();
-        return;
+        return 0;
       }
 
       foreach (var item in _tweeners)
@@ -56,11 +61,13 @@ namespace JinToliq.SimpleTween
         else
           item.PlayReverse(speed);
       }
+
+      return _longest.Duration;
     }
 
     public void Stop(bool reset)
     {
-      if (_tweeners.Count == 0)
+      if (IsEmpty)
         return;
 
       foreach (var tweener in _tweeners)
