@@ -20,3 +20,5 @@
 ### Added speed parameter for OnDemand Tweeners. Added Stop to CompositeTweener
 ## [1.4.0] 2025-06-18
 ### Added Duration property to composite tweeners
+## [1.5.0] 2025-06-19
+### Added ability to set position for CompositeTweener and IsPlaying property for Tweeners and CompositeTweener

@@ -10,6 +10,7 @@ namespace JinToliq.SimpleTween
 
     public bool IsEmpty => _tweeners is null || _tweeners.Count == 0;
     public float Duration => IsEmpty ? 0 : _longest.Duration;
+    public bool IsAnyPlaying => !IsEmpty && _longest.IsPlaying;
 
     public CompositeTweener(IReadOnlyList<Tweener> tweeners)
     {
@@ -63,6 +64,23 @@ namespace JinToliq.SimpleTween
       }
 
       return _longest.Duration;
+    }
+
+    public void SetTweenPosition(float time)
+    {
+      if (time is < 0 or > 1)
+        throw new ArgumentOutOfRangeException(nameof(time));
+
+      if (IsEmpty)
+        return;
+
+      foreach (var tweener in _tweeners)
+      {
+        if (tweener.IsPlaying)
+          Stop(false);
+
+        tweener.SetTweenPosition(time);
+      }
     }
 
     public void Stop(bool reset)
