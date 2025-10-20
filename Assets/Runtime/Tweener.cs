@@ -48,6 +48,8 @@ namespace JinToliq.SimpleTween
     {
       if (_resetOnDisable)
         Tween(0);
+
+      _routine = null;
     }
 
     public void SetTweenPosition(float value) => Tween(value);
@@ -71,7 +73,10 @@ namespace JinToliq.SimpleTween
     public void Stop(bool reset)
     {
       if (_routine != null)
+      {
         StopCoroutine(_routine);
+        _routine = null;
+      }
 
       if (reset)
         SetTweenPosition(0);
